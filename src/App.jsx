@@ -5,20 +5,32 @@ import {useState} from 'react'
 
 const Seat = (props) =>{
   
-  const {seatId,price, isReserved} = props
+  const {seatId,price, isReserved,onClick} = props
 
   const initialColor = isReserved?'bg-gray-600':'bg-orange-500'
   const initialText = isReserved?'Reserved':'';
 
   const [color,setColor] = useState(initialColor)
   const [seatText,setSeatText] = useState(initialText)
+
+  const changeProp = () => {
+    if (!isReserved) {
+      seatText == "Added" ? setSeatText("") : setSeatText("Added");
+      color == "bg-green-500"
+        ? setColor("bg-orange-500")
+        : setColor("bg-green-500");
+    }
+  }
   
   return (
-    <button className={ `${color} text-white text-sm font-medium text-opacity-80  h-[70px] w-[70px] rounded-sm`}  id={seatId} >{seatText}</button>
+    <button onClick={changeProp} className={ `${color} text-white text-sm font-medium text-opacity-80  h-[70px] w-[70px] rounded-sm`}  id={seatId} >{seatText}</button>
   )
 }
 
 function App() {
+
+  const [selectedSeats,setSelectedSeats] = useState([])
+  const [total,setTotal] = useState(0)
 
 	return (
 
@@ -42,7 +54,20 @@ function App() {
 
             {
               seatData.map((seatObj)=>(
-                <Seat key={seatObj.id} seatId={seatObj.id} price={seatObj.price} isReserved={seatObj.isReserved} />
+                <Seat onClick={()=>{
+                  if (selectedSeats.includes(seatObj) && seatObj.isReserved === false) {
+                    const filterList = Array.from(selectedSeats);
+                    filterList.splice(filterList.indexOf(seatObj), 1);
+                    setSelectedSeats(filterList);
+                    setTotal(total - seatObj.price);
+                  } else {
+                    if (seatObj.isReserved === false) {
+                      setSelectedSeats([...selectedSeats, seatObj]);
+                      setTotal(total + seatObj.price);
+                    }
+                  }
+                }}
+                 key={seatObj.id} seatId={seatObj.id} price={seatObj.price} isReserved={seatObj.isReserved} />
               ))
             }
             
