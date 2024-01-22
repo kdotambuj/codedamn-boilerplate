@@ -21,9 +21,14 @@ const Seat = (props) =>{
         : setColor("bg-green-500");
     }
   }
+
+  const clickEventFunctions = ()=>{
+    {changeProp()};
+    {onClick()};
+  }
   
   return (
-    <button onClick={changeProp} className={ `${color} text-white text-sm font-medium text-opacity-80  h-[70px] w-[70px] rounded-sm`}  id={seatId} >{seatText}</button>
+    <button onClick={clickEventFunctions} className={ `${color} text-white text-sm font-medium text-opacity-80  h-[70px] w-[70px] rounded-sm`}  id={seatId} >{seatText}</button>
   )
 }
 
