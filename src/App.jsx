@@ -1,4 +1,13 @@
 import "./App.css";
+import seatData from '../data'
+
+
+const Seat = (props) =>{
+  
+  return (
+    <button className={ `bg-orange-500 text-white text-sm font-medium text-opacity-80  h-[70px] w-[70px] rounded-sm`}  id={'#'} >SeatText</button>
+  )
+}
 
 function App() {
 
@@ -21,6 +30,13 @@ function App() {
       
           <div className="flex gap-4 flex-wrap w-[420px] h-[420px]">
             {/* Seat Matrix UI will be written here */}
+
+            {
+              seatData.map((seatObj)=>(
+                <Seat key={seatObj.id} seatId={seatObj.id} price={seatObj.price} isReserved={seatObj.isReserved} />
+              ))
+            }
+            
           </div>
         </div>
     </div>
